@@ -13,14 +13,20 @@ const app = express()
 
 app.use(express.json())
 
-app.use(cors())
+app.use(cors({
+    origin: "https://codejam-client-msem.onrender.com", // ✅ Allow your client domain
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // ✅ Allow cookies and authentication headers
+  }))
 
 app.use(express.static(path.join(__dirname, "public"))) // Serve static files
 
 const server = http.createServer(app)
 const io = new Server(server, {
 	cors: {
-		origin: "*",
+		origin: "https://codejam-client-msem.onrender.com", // ✅ Allow your client domain
+		methods: ["GET", "POST"],
+		credentials: true,
 	},
 	maxHttpBufferSize: 1e8,
 	pingTimeout: 60000,
